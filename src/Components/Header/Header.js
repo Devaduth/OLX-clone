@@ -1,17 +1,27 @@
-import React from 'react';
-
+import React,{useContext} from 'react';
+import { useHistory } from 'react-router-dom'
 import './Header.css';
 import OlxLogo from '../../assets/OlxLogo';
 import Search from '../../assets/Search';
 import Arrow from '../../assets/Arrow';
 import SellButton from '../../assets/SellButton';
 import SellButtonPlus from '../../assets/SellButtonPlus';
+import { AuthContext, FirebaseContext } from '../../store/Context';
 function Header() {
+  const history = useHistory()
+  const {user} =useContext(AuthContext)
+  const {firebase} = useContext(FirebaseContext)
+  function changePathLogin(){
+    history.push('/login')
+  }
+  function ChangePathSell(){
+    history.push('/create')
+  }
   return (
     <div className="headerParentDiv">
       <div className="headerChildDiv">
         <div className="brandName">
-          <OlxLogo></OlxLogo>
+          <OlxLogo ></OlxLogo>
         </div>
         <div className="placeSearch">
           <Search></Search>
@@ -34,15 +44,23 @@ function Header() {
           <Arrow></Arrow>
         </div>
         <div className="loginPage">
-          <span>Login</span>
+          {
+          user ? <span className='user-btn'>{user.displayName}</span> : <span className='user-btn' onClick={changePathLogin}> Login </span>
+          }
           <hr />
-        </div>
+        </div>  
+          {user && <span className='user-btn' onClick={()=>{
+            firebase.auth().signOut().then(()=>{
+              history.push('/login')
+              alert('logout successfull')
+            })
+          }}>Logout</span>}
 
         <div className="sellMenu">
-          <SellButton></SellButton>
+          {user && <SellButton></SellButton>}
           <div className="sellMenuContent">
-            <SellButtonPlus></SellButtonPlus>
-            <span>SELL</span>
+            {user && <SellButtonPlus></SellButtonPlus>}
+         {user &&  <span className='user-btn' onClick={ChangePathSell} >SELL</span>  }
           </div>
         </div>
       </div>
