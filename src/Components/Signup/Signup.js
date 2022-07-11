@@ -15,7 +15,7 @@ export default function Signup() {
   const [username, setUsername] = useState('');
   const [btn, setBtn] = useState('sign up');
   const [email, setEmail] = useState('');
-  // const [phone, setPhone] = useState('');
+  const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const { firebase } = useContext(FirebaseContext)
 
@@ -28,7 +28,7 @@ export default function Signup() {
         firebase.firestore().collection('users').add({
           id: result.user.uid,
           username: username,
-          // phone: phone
+          phone: phone
         }).then(() => {
           history.push("/login")
         })
@@ -70,7 +70,7 @@ export default function Signup() {
             defaultValue="John"
           />
           <br />
-          {/*<label htmlFor="lname">Phone</label>
+          <label htmlFor="lname">Phone</label>
           <br />
           <input className="input"
             type="number"
@@ -78,7 +78,7 @@ export default function Signup() {
             onChange={(e) => setPhone(e.target.value)}
             id="lname"
             name="phone"
-            defaultValue="Doe" />*/}
+            defaultValue="Doe" />
           <br />
           <label htmlFor="lname">Password</label>
           <br />

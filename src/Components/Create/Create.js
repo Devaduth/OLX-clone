@@ -3,29 +3,39 @@ import './Create.css';
 import Header from '../Header/Header';
 import {FirebaseContext,AuthContext} from '../../store/Context'
 import '../../firebase/config'
+import {useHistory} from 'react-router-dom'
 const Create = () => {
+  const history = useHistory()
   const {firebase} = useContext(FirebaseContext)
   const {user} = useContext(AuthContext)
   const [name, setName] = useState('')
   const [category, setCategory] = useState('')
   const [price, setPrice] = useState('')
   const [image, setImage] = useState();
+  const [btn, setBtn] = useState('Upload and Submit');
+
   const date = new Date()
   const handleSubmit = (e)=>{
     e.preventDefault()
-      firebase.storage().ref(`/image/${image.name}`).put(image).then(({ref})=>{
-        ref.getDownloadURL().then((url)=>{
-          //console.log('url :', url);
-          firebase.firestore().collection('products').add({
-            name,
-            category,
-            price,
-            url,
-            userId:user.Id,
-            createdAt:date.toDateString()
+      if(image){
+        setBtn('Uploading..')
+        firebase.storage().ref(`/image/${image.name}`).put(image).then(({ref})=>{
+          ref.getDownloadURL().then((url)=>{
+            //console.log('url :', url);
+            firebase.firestore().collection('products').add({
+              name,
+              category,
+              price,
+              url,
+              userId:user.uid,
+              createdAt:date.toDateString()
+            })
+            history.push('/')
           })
         })
-      })
+      }else{
+        alert('Image required')
+      }
   }
   return (
     <Fragment>
@@ -79,7 +89,7 @@ const Create = () => {
               }}
               type="file" />
             <br />
-            <button onClick={handleSubmit} className="uploadBtn">upload and Submit</button>
+            <button onClick={handleSubmit} className="uploadBtn">{btn}</button>
           </form>
         </div>
       </card>

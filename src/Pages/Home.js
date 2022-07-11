@@ -11,7 +11,7 @@ function Home(props) {
     <div className="homeParentDiv">
       <Header />
       <Banner />
-      <Posts />
+      <Posts  />
       <Footer />
     </div>
   );
