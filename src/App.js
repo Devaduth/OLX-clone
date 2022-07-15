@@ -32,7 +32,7 @@ function App() {
       <Post>
         <Router>
           <Route exact path='/' >
-            <Home />
+           {user ? <Home /> : <Signup />}
           </Route>
           <Route path='/signup'>
             <Signup />

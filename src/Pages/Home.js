@@ -8,19 +8,14 @@ import { AuthContext, FirebaseContext } from '../store/Context';
 function Home(props) {
   const {user} =useContext(AuthContext)
   const history = useHistory()
-  if(user){
-    return (
-      <div className="homeParentDiv">
-        <Header />
-        <Banner />
-        <Posts  />
-        <Footer />
-      </div>
-    );
-  }else{
-    history.push('/signup')
-  }
+  return (
+    <div className="homeParentDiv">
+      <Header />
+      <Banner />
+      <Posts  />
+      <Footer />
+    </div>
+  );
 }
-
 export default Home;
  
