@@ -1,20 +1,25 @@
-import React from 'react';
-
+import React,{useContext} from 'react';
+import { useHistory } from 'react-router-dom'
 import Header from '../Components/Header/Header';
 import Banner from '../Components/Banner/Banner';
-
 import Posts from '../Components/Posts/Posts';
 import Footer from '../Components/Footer/Footer';
-
+import { AuthContext, FirebaseContext } from '../store/Context';
 function Home(props) {
-  return (
-    <div className="homeParentDiv">
-      <Header />
-      <Banner />
-      <Posts  />
-      <Footer />
-    </div>
-  );
+  const {user} =useContext(AuthContext)
+  const history = useHistory()
+  if(user){
+    return (
+      <div className="homeParentDiv">
+        <Header />
+        <Banner />
+        <Posts  />
+        <Footer />
+      </div>
+    );
+  }else{
+    history.push('/signup')
+  }
 }
 
 export default Home;

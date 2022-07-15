@@ -53,7 +53,7 @@ function Header(props) {
 
         <div className="loginPage">
           {
-          user ? <span className='user-btn'>{user.displayName}</span> : <span className='user-btn' onClick={changePathLogin}> Login </span> 
+          user ? <span >{user.displayName}</span> : <span  onClick={changePathLogin}> Login </span> 
           }
           &nbsp; &nbsp; &nbsp; &nbsp;
           {user && <span 

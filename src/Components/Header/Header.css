@@ -105,7 +105,9 @@
   font-weight: bolder;
   margin-right: 5px;
 }
-
+.loginPage:hover{
+  cursor: pointer;
+}
 .loginPage hr {
   margin: 0;
   background-color: black;
